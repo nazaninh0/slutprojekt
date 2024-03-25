@@ -8,7 +8,7 @@ public class Main {
         System.out.println("ange ditt namn ");
         String name = scan.nextLine();
         System.out.println("ange ditt födesle datum");
-        int birthdate = scan.nextInt(); 
+        int birthdate = scan.nextInt();
 
     }
 }
