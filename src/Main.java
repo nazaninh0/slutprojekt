@@ -13,17 +13,33 @@ public class Main {
         //Customer booking = new Customer(customer);
         System.out.println("customer name is " + customer.getName());
         System.out.println("customer age is " + customer.getAge());
-        System.out.println("choose between these movies: \n 1: Wonka \n 2: Anyone but you \n Godzilla-Kong");
+        System.out.println("choose between these movies: \n 1: Wonka \n 2: Anyone but you \n 3:Godzilla-Kong");
         System.out.println("choose between one these movies (OBS !! write the number)  :");
         int movieId = scan.nextInt();
+        Bio selectedMovie = null;
         System.out.println("   1   2   3   4   5   6   7  \n 8   9   10   11   12   13   14 \n 15   16   17   18   19   20   21");
         System.out.println("choose a seat : ");
         int Seat = scan.nextInt();
         booking bookedSeat = new booking(Seat);
         System.out.println(" your booked seat is " + bookedSeat.getSeat());
-        while (true) {
-
+        switch (movieId) {
+            case 1:
+                selectedMovie = new Bio(1, "Wonka", "muiscal, comedy", 12);
+                break;
+            case 2:
+                selectedMovie = new Bio(2, "anyone but you ", "romance", 18);
+                break;
+            case 3:
+                selectedMovie = new Bio(3, "Godzilla- Kong ", "action , horror", 15);
+                break;
         }
+        if (age >= selectedMovie.getAgelimit()) {
+            System.out.println("you are allowd to watch this movie" + selectedMovie.getTitle());
+
+        } else {
+            System.out.println("sorry you are not allowed to watch this movie: " + selectedMovie.getTitle());
+        }
+
 
     }
 }
