@@ -11,16 +11,14 @@ public class Bio {
     private int capacity;
     private int Agelimit;
 
-    public Bio(int movieId, String title, int AgeLimit, String genre) {
+    public Bio(int movieId, String title, String genre, int AgeLimit) {
         this.movieId = movieId;
         this.title = title;
         this.genre = genre;
-        //this.bookedSeats = new ArrayList<>();
         this.Agelimit = Agelimit;
     }
 
     public int getMovieId() {
-
         return movieId;
     }
 
