@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("ange ditt namn ");
+        System.out.println(" enter your name: ");
         String name = scan.nextLine();
-        System.out.println("ange ditt födesle datum");
-        int birthdate = scan.nextInt();
+        System.out.println("enter your age: ");
+        int age = scan.nextInt();
+        Customer customer = new Customer(name, age);
+        Customer booking = new Customer(customer);
 
     }
 }
