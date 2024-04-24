@@ -35,11 +35,11 @@ public class Bio {
         return Agelimit;
     }
 
-    class VIPMovie extends Bio {
+    public static class VIPMovie extends Bio {
         private String specialService;
 
         public VIPMovie(String title, String genre, int Agelimit, String specialService) {
-            super(0, title, genre, Agelimit);
+            super(4, title, genre, Agelimit);
             this.specialService = specialService;
         }
 

@@ -14,15 +14,12 @@ public class Main {
         System.out.println("customer name is " + customer.getName());
         System.out.println("customer age is " + customer.getAge());
         System.out.println("choose between these movies: \n 1: Wonka \n 2: Anyone but you \n 3:Godzilla-Kong");
+        System.out.println("4: VIP movies ( age limit : 18 ) ");
         System.out.println("choose between one these movies (OBS !! write the number)  :");
         int movieId = scan.nextInt();
         Bio selectedMovie = null;
-        System.out.println("   1   2   3   4   5   6   7  \n 8   9   10   11   12   13   14 \n 15   16   17   18   19   20   21");
-        System.out.println("choose a seat : ");
-        int Seat = scan.nextInt();
-        booking bookedSeat = new booking(Seat);
-        System.out.println(" your booked seat is " + bookedSeat.getSeat());
         switch (movieId) {
+
             case 1:
                 selectedMovie = new Bio(1, "Wonka", "muiscal, comedy", 12);
                 break;
@@ -32,6 +29,12 @@ public class Main {
             case 3:
                 selectedMovie = new Bio(3, "Godzilla- Kong ", "action , horror", 15);
                 break;
+            case 4:
+                selectedMovie = new Bio.VIPMovie("Kung Fu Panda 4", "VIP Movie - Exclusive Screening", 18, "Free snacks and drinks");
+                break;
+            default:
+                System.out.println("Invalid movie selection");
+                return;
         }
         if (age >= selectedMovie.getAgelimit()) {
             System.out.println("you are allowd to watch this movie" + selectedMovie.getTitle());
@@ -39,6 +42,12 @@ public class Main {
         } else {
             System.out.println("sorry you are not allowed to watch this movie: " + selectedMovie.getTitle());
         }
+
+        System.out.println("   1   2   3   4   5   6   7  \n 8   9   10   11   12   13   14 \n 15   16   17   18   19   20   21");
+        System.out.println("choose a seat : ");
+        int Seat = scan.nextInt();
+        booking bookedSeat = new booking(Seat);
+        System.out.println(" your booked seat is " + bookedSeat.getSeat());
 
 
     }
