@@ -3,6 +3,7 @@ import java.util.Scanner;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         // ask user to enter name and age
@@ -18,6 +19,7 @@ public class Main {
         // Initialize variables for selected movie and menu option
         Bio selectedMovie = null;
         int option = 0;
+        booking selectedBooking = null;
         while (true) {
             // print 7 display the menu / options
             System.out.println("choose one of the options below: " +
@@ -40,6 +42,13 @@ public class Main {
                 System.out.println("<ERROR: choose again");
                 scan.nextLine();
             }
+            try {
+                option = scan.nextInt();
+
+            } catch (Exception e) {
+                System.out.println("ange integer");
+                continue;
+            }
             // Process user's choice
 
             switch (option) {
@@ -48,20 +57,17 @@ public class Main {
                     break;
 
                 case 2:
-                    bookMovie(scan, customer); // book movie
+                    selectedBooking = bookMovie(scan, customer);
                     break;
 
                 case 3:
-                    cancelBooking(scan, bookedSeat); // cancel a booking
+                    cancelBooking(scan, selectedBooking); // cancel a booking
                     break;
 
                 case 4:
                     System.out.println("exiting ...."); // exit the program
-                    return;
-                break;
-                default:
-                    System.out.println("<ERROR: choose again>"); // Handle invalid input
-                    break;
+                    System.exit(0);
+
             }
         }
 
@@ -78,29 +84,32 @@ public class Main {
     }
 
     // Book a movie
-    private static void bookMovie(Scanner scan, Customer customer) {
-        int movieId = selectMovie(scan);
-        Bio selectedMovie = selectMovieById(movieId);
-        //validate user options
-        if (selectedMovie == null) {
-            System.out.println("Invalid movie selection ");
-            return;
-        }
-        // Display movie selection result
-        displayMovieSelectionResult(selectedMovie, customer.getAge());
-        // book a seat
-        System.out.println("choose a seat : ");
-        int Seat = scan.nextInt();
-        booking bookedSeat = new booking(Seat);
-        // Book the chosen seat
-        if (bookedSeat.bookSeat(Seat)) {
-            System.out.println("seat" + Seat + "is booked");
-        } else {
-            System.out.println("the seat is already" + Seat + "booked");
-        }
-        //display the booking
-        displayBookingInfo(customer, selectedMovie, bookedSeat);
 
+    private static booking bookMovie(Scanner scan, Customer customer) {
+        System.out.println("Choose a movie (enter the number): ");
+        int movieId = scan.nextInt();
+        scan.nextLine(); // Consume newline
+        System.out.println("Choose a seat: ");
+        int seat = scan.nextInt();
+        scan.nextLine(); // Consume newline
+        booking Booking;
+        if (movieId == 4) { // Assuming movieId 4 is for VIP movies
+            Booking = new booking.VIPBooking(seat, "Free drinks and snacks");
+        } else {
+            System.out.println("Enter discount code (if any): ");
+            String discountCode = scan.nextLine();
+            Booking = new booking.StandardBooking(seat, discountCode);
+        }
+
+        if (Booking.bookSeat(seat)) {
+            System.out.println("Seat " + seat + " is booked.");
+        } else {
+            System.out.println("The seat " + seat + " is already booked.");
+        }
+
+        displayBookingInfo(customer, Booking);
+
+        return Booking;
     }
 
     // Select a movie
@@ -135,10 +144,15 @@ public class Main {
     }
 
     // Display booking information
-    private static void displayBookingInfo(Customer customer, Bio selectedMovie, booking bookedSeat) {
+    private static void displayBookingInfo(Customer customer, Bio selectedMovie, booking booking) {
         System.out.println("Your name is " + customer.getName() + ", your age is " + customer.getAge() + ".");
         System.out.println("You chose to watch '" + selectedMovie.getTitle() + "'.");
-        System.out.println("Your booked seat is " + bookedSeat.getSeat() + ".");
+        System.out.println("Your booked seat is " + booking.getSeat() + ".");
+        if (booking instanceof booking.VIPBooking) {
+            System.out.println("Special Service: " + ((booking.VIPBooking) booking).getExtraService());
+        } else if (booking instanceof booking.StandardBooking) {
+            System.out.println("Discount Code: " + ((booking.StandardBooking) booking).getDiscountCode());
+        }
     }
 
     // a MRTHOD TO CANCEL THE MOVIE AND SEAT BOOKING
